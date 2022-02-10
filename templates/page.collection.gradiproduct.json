@@ -1,0 +1,9 @@
+{
+  "name": "Productos gradiweb",
+  "sections": {
+      "main": {
+          "type": "productsgrid"
+      }
+  },
+  "order": [ "main" ]
+}

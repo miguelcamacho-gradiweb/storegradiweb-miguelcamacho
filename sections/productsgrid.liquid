@@ -1,0 +1,134 @@
+{{ 'productsgrid.css' | asset_url | stylesheet_tag }}
+
+{% assign maxLimit = collections["technology"].products_count %}
+
+{% assign collection = collections %}
+{%- comment -%}
+    <input type="hidden" name="" id="insta-clientid" value="{{ collection | json}}" />
+{%- endcomment -%}
+
+<script>
+    let dataVariants = []
+    let dataProducts = []
+</script>
+
+<section class="productsGrid row col-12 mx-auto p-0 m-0">
+    <div class="productsGrid__titule col-12 col-sm-10 mx-auto mt-3 mb-3">
+        <h2>Products</h2>
+    </div>
+
+    <div class="preferencesProduct row col-10 mx-auto mb-3">
+        <div class="preferencesProduct__collection col-12 col-sm-10 col-md-6">
+            <h3>Select the collection of your preference</h3>
+            <select name="selectCollection" id="selectCollectionId">
+                <option selected="selected" value="all">All</option>
+                {% for collection in collection %}
+                <option value="{{ collection.id }}" >{{ collection.title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="preferencesProduct__range col-12 col-sm-10 col-md-6">
+            <h3>How many products do you want to see</h3>
+            <div class="preferencesProduct__range--details">
+                <input id="rangeLimit" type="range" step="1" min="0"  list="tickmarks">
+                <p id="seeRange" class="ml-2"> </p>
+                <datalist id="tickmarks" name="{{ collection.products_count }}">
+            </datalist>
+            </div>
+        </div>
+    </div>
+
+    <article class="listProduct disposition col-10 row mx-auto ">
+        {% for item in collections %}
+            <div class = "{{ item.handle}} lisproduct__grid col-12" >
+                <h2>{{ item.title}}</h2>
+                <div class="lisproduct__grid--render ">
+                    {% for product in item.products %}
+                        <div class="products col-12 col-sm-4 col-md-4 mb-2 mx-auto">
+                            <div class="product">
+                                <div class="product__render">
+                                    <a href="{{ product.url }}">{{ product.title }}</a>
+                                    <img src="{{ product.first_available_variant.featured_image | image_url }}" alt="{{ product.featured_image.alt | escape}}"
+                                        loading="lazy" width="200" height="200" id="{{ product.id }}">
+                                    <p>Price: {{ product.price | money }}  </p>
+                                </div>
+                                <div class="product_variants">
+                                    {% for variant in product.variants %}
+                                    {% if variant.available != false %}
+                                    <img src="{{ variant.featured_image | image_url }}" alt="{{ variant.featured_image.alt | escape}}"
+                                        loading="lazy" width="50" height="50" name="{{ variant.featured_image.product_id }}" id="{{ variant.id }}">
+                                        <script>
+                                            dataVariants.push({{ variant | json }});
+                                        </script>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="product__buy">
+                                    <p id="{{ product.first_available_variant.id }}" class="buy_car">Buy product</p>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            dataProducts.push({{ product | json }})
+                        </script>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <script>
+           
+      </script>
+    </article>
+
+    <div class="minicartShade col-12 m-0">
+        <div class="minicart row col-11 col-md-5" >
+            <div class="minicart__header col-12">
+                <h2>Your products</h2>
+                <i class="fas fa-window-close"></i>
+            </div>
+            <div class="minicart__list col-11">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="{{ 'productsgrid.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'editcart.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'carbuy.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'getcart.js' | asset_url }}" defer="defer"></script>
+
+
+<script>
+    window.onload = function() {
+        let collection = {{ collections | json }}
+        collectionData(collection)
+        console.log(dataProducts)
+        let rangeLimit = document.getElementById("rangeLimit")
+        let seeRange = document.getElementById("seeRange")
+        rangeLimit.setAttribute("max", `${dataProducts.length}`)
+        rangeLimit.setAttribute("value", `${dataProducts.length}`)
+        seeRange.innerHTML=`${dataProducts.length} Products`
+    }
+</script>
+
+
+{% schema %}
+{
+    "name": "t:sections.main-collection-product-grid.name",
+    "settings":[
+        {
+        "type": "range",
+        "id": "id_range",
+        "label": "label",
+        "unit": "u",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "default": 1
+        }
+    ]
+}
+{% endschema %}
