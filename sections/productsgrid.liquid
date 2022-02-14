@@ -1,11 +1,7 @@
 {{ 'productsgrid.css' | asset_url | stylesheet_tag }}
 
 {% assign maxLimit = collections["technology"].products_count %}
-
 {% assign collection = collections %}
-{%- comment -%}
-    <input type="hidden" name="" id="insta-clientid" value="{{ collection | json}}" />
-{%- endcomment -%}
 
 <script>
     let dataVariants = []
@@ -51,7 +47,7 @@
                                     <a href="{{ product.url }}">{{ product.title }}</a>
                                     <img src="{{ product.first_available_variant.featured_image | image_url }}" alt="{{ product.featured_image.alt | escape}}"
                                         loading="lazy" width="200" height="200" id="{{ product.id }}">
-                                    <p>Price: {{ product.price | money }}  </p>
+                                    <p>Price: {{ product.price }} $ </p>
                                 </div>
                                 <div class="product_variants">
                                     {% for variant in product.variants %}
@@ -93,19 +89,10 @@
     </div>
 </section>
 
-
-
-<script src="{{ 'productsgrid.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'editcart.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'carbuy.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'getcart.js' | asset_url }}" defer="defer"></script>
-
-
 <script>
     window.onload = function() {
         let collection = {{ collections | json }}
         collectionData(collection)
-        console.log(dataProducts)
         let rangeLimit = document.getElementById("rangeLimit")
         let seeRange = document.getElementById("seeRange")
         rangeLimit.setAttribute("max", `${dataProducts.length}`)
@@ -113,22 +100,8 @@
         seeRange.innerHTML=`${dataProducts.length} Products`
     }
 </script>
+<script src="{{ 'productsgrid.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'carbuy.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'getcart.js' | asset_url }}" defer="defer"></script>
 
 
-{% schema %}
-{
-    "name": "t:sections.main-collection-product-grid.name",
-    "settings":[
-        {
-        "type": "range",
-        "id": "id_range",
-        "label": "label",
-        "unit": "u",
-        "min": 1,
-        "max": 10,
-        "step": 1,
-        "default": 1
-        }
-    ]
-}
-{% endschema %}

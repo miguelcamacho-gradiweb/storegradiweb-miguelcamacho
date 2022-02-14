@@ -1,3 +1,11 @@
+/*
+ Theme Name: DawnStoreMACRGradiweb
+ Description: Style Sheet from page.collection.gradiproduct.json section main\
+ Author: Miguel Angel Camacho 
+ Author URL:  https://miguelcamacho-gradi-store.myshopify.com
+ Tags: main 
+*/
+
 .disposition{
     flex-wrap: wrap;
 }
@@ -152,6 +160,12 @@ select {
     margin: auto;
     height: 80%;
 }
+
+.minicart__list b{
+    font-size: 2.4rem;
+    margin: 1rem auto;
+}
+
 
 .minicart__list img {
     width: 40%;

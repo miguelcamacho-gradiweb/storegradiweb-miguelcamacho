@@ -1,11 +1,34 @@
+/*
+ Theme Name: DawnStoreMACRGradiweb
+ Description: Style Sheet from index.json section banner-gradiweb\
+ Author: Miguel Angel Camacho 
+ Author URL:  https://miguelcamacho-gradi-store.myshopify.com
+ Tags: Banner 
+*/
+
+#particles-js {
+	height: 100vh; 
+	width: 100%;
+    position: fixed;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.banner{
+    padding: 4rem;
+}
+
 .banner__customers {
     text-align: center;
-    font-size: 4rem;
     margin: 3rem auto;
 }
 
 .banner__customers h2{
-    font-size: 3rem;
+    font-size: 3.5rem;
+}
+
+.banner__customers h3{
+    margin-top: 10rem;
 }
 
 .banner__customers span{
@@ -13,3 +36,4 @@
     color: gray;
     font-size: 3.3rem;
 }
+

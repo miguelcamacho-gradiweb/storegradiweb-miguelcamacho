@@ -1,23 +1,14 @@
 {{ 'banner-gradiweb.css' | asset_url | stylesheet_tag }}
-
-<div class="banner__customers col-11 col-md-10">
-    <h2> Somos una tienda de alto impacto con más de <span>XXXX</span>  órdenes entregadas y más de <span>XXXX</span>  clientes a nivel mundial</h2>
+<div id="particles-js"></div>
+<div class="banner col-12 m-0">
+    <div class="banner__customers col-11 col-md-10">
+        <h2> Somos una tienda de alto impacto con más de <span>XXXX</span> órdenes entregadas y más de <span>XXXX</span>clientes a nivel mundial</span></h2>
+        <h3><span class="typed"></span></h3>
+    </div>
 </div>
-    
-<script>
-    let data = null
-    let dataShipped = null
-    window.onload = function() {
-        const postFunc = async () => {
-            data = await getCustomers()
-            dataShipped = await getOrders()
-            let bannerInfo = document.querySelectorAll(".banner__customers h2 span")
-            {dataShipped.status === 200?bannerInfo[0].innerHTML = dataShipped.data.orders.length: 100}
-            {data.status === 200?bannerInfo[1].innerHTML = data.data.customers.length: 100}
-            
-        }
-        postFunc() 
-    }
-</script>
+
+<script src="{{ 'banner.gradiwebtext.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'services.customers.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'particles.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'app.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'services.orders.js' | asset_url }}" defer="defer"></script>

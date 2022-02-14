@@ -106,6 +106,9 @@ const getCarProduct = async (items) => {
 
     console.log(promiseGetCar)
 
+    let b =document.createElement("b")
+    b.innerHTML= `Total: ${Math.trunc(promiseGetCar.original_total_price)} $`;
+
     for (let i = 0; i < promiseGetCar.items.length; i++) {
       let div = document.createElement("div");
       let divI = document.createElement("div");
@@ -127,8 +130,7 @@ const getCarProduct = async (items) => {
       optionDefault.setAttribute("disabled", "disabled");
       optionDefault.setAttribute("hidden", "hidden");
       optionDefault.setAttribute("value", `${promiseGetCar.items[i].quantity}`);
-      optionDefault.innerHTML = promiseGetCar.items[i].quantity;
-      select.appendChild(optionDefault);
+
 
       for (let j = 0; j < 5; j++) {
         let option = document.createElement("option");
@@ -143,10 +145,12 @@ const getCarProduct = async (items) => {
       iElement.setAttribute("id", `${promiseGetCar.items[i].id}`);
       iElement.setAttribute("class",`fas fa-trash-alt delete__${promiseGetCar.items[i].id}`);
 
+      optionDefault.innerHTML = promiseGetCar.items[i].quantity;
       h3.innerHTML = `${promiseGetCar.items[i].title}`;
       label.innerHTML = "change the amount";
-      p.innerHTML = `${promiseGetCar.items[i].final_line_price} $`;
+      p.innerHTML = `${Math.trunc(promiseGetCar.items[i].final_line_price)} $`;
 
+      select.appendChild(optionDefault);
       divSelect.appendChild(label);
       divSelect.appendChild(select);
       div.appendChild(h3);
@@ -158,12 +162,13 @@ const getCarProduct = async (items) => {
       divMinicartList.appendChild(div);
     }
     minicart.replaceChild(divMinicartList, minicartList);
+    divMinicartList.appendChild(b)
+
     minicartShade.style.display = "block";
 
     if(promiseGetCar.items.length == 0){
       divMinicartList.innerHTML = "You have no items in your cart"
     }
-
     setEventButtonDelete();
   }
 };
